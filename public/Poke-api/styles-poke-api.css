@@ -1,0 +1,146 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: large;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1 {
+    font-size: xx-large;
+}
+
+.flecha {
+    height: 15%;
+    width: 15%;
+}
+
+/*fpropiedad para poner en gris botones*/
+.disabled {
+    opacity: 0.6;
+}
+
+.btn {
+    transition-duration: 0.4s;
+    padding: 1%;
+    border-radius: 50%;
+    background-color: rgb(60, 219, 211);
+}
+
+.poke {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    border: 2px solid rgb(209, 0, 0);
+    border-radius: 5px;
+}
+
+.grid-container {
+    display: grid;
+    background-color: rgb(19, 0, 185);
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 0.5fr 2.2fr 1.5fr 1.0fr 0.4fr;
+    grid-template-rows: 0.4fr 2.9fr 0fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        "cabezera cabezera cabezera cabezera cabezera"
+        "lista-pokemones lista-pokemones datos habilidades habilidades";
+
+}
+
+.lista-pokemones {
+    grid-area: lista-pokemones;
+    background-color: rgb(66, 48, 224);
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-around;
+    color: rgb(17, 15, 14);
+    font-weight: 600;
+    border: 25px solid rgb(46, 0, 184);
+
+}
+
+.datos {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.8fr 1.4fr 0.8fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        "nombre"
+        "imagen"
+        "evoluciones";
+    grid-area: datos;
+}
+
+.nombre {
+    grid-area: nombre;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(209, 35, 53);
+}
+
+#nombre {
+    font-size: 25px;
+}
+
+.imagen {
+    grid-area: imagen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(157, 27, 40);
+}
+
+.evoluciones {
+    grid-area: evoluciones;
+    background-color: rgb(209, 35, 53);
+}
+
+#img {
+    border: 5px solid #000000;
+    border-radius: 50%;
+    height: 30vh;
+    width: 15vw;
+    background-color: rgb(0, 141, 213);
+}
+
+.habilidades {
+    grid-area: habilidades;
+    background-color: rgb(46, 0, 184);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+/*cabecera*/
+
+.cabezera {
+    display: flex;
+    grid-area: cabezera;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.titulo {
+    align-self: center;
+    grid-area: titulo;
+    color: rgb(60, 219, 211);
+}
+
+.elem-dato {
+    display: flex;
+    border: 5px solid rgb(201, 197, 197);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    flex-direction: column;
+    width: 50%;
+    height: 25%;
+
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="styles-poke-api.css" />
+		<title>Poke API</title>
+	</head>
+	<body>
+		<div class="grid-container">
+			<div class="cabezera" value="">
+				<button
+					class="btn"
+					id="previous"
+					onclick="manejarFlechas(this.id)"
+				>
+					Pagina Anterior
+				</button>
+
+				<div class="titulo">
+					<h1>POKE API</h1>
+				</div>
+
+				<button class="btn" id="next" onclick="manejarFlechas(this.id)">
+					Siguiente Pagina
+				</button>
+			</div>
+
+			<div class="lista-pokemones"></div>
+
+			<div class="datos">
+				<div class="nombre">
+					<strong id="nombre"></strong>
+				</div>
+				<div class="imagen">
+					<img id="img" />
+				</div>
+
+				<div class="evoluciones"></div>
+			</div>
+
+			<div class="habilidades"></div>
+		</div>
+
+		<script src="poke-api.js"></script>
+	</body>
+</html>
