@@ -27,7 +27,7 @@ function loadPokemons(data) {
 	console.log(document.getElementById("previous").value);
 	console.log(document.getElementById("next").value);
 
-	for (let i = 0; i < data.results.length; i++) {
+	for (let i = 0; i < data.results.length; i++) {//proceso cada elemendo de data que contiene nombre y link de cada pokemon
 		agregarElemento(data.results[i].name, data.results[i].url);
 		obtenerJson(data.results[i].url, setearElement, data.results[i].name);
 	}
@@ -50,7 +50,7 @@ function cargarFlechas(data) {
 	} else {
 		next.disabled = false;
 	}
-	console.count("cargar-flechas");
+	// console.count("cargar-flechas");
 }
 
 //CREO UN ELEMENTO ,LE SETEO LO NECESARIO PARA LUEGO MANIPULARLO Y LO AGREGO AL DOM
@@ -60,7 +60,10 @@ function agregarElemento(name, url) {
 	$fig.className = "poke"; // seteo el elemento contenedor con nombre de clase poke
 	$fig.id = name;
 	$fig.src = url;
-	$pokeList.appendChild($fig); // SE AGREGA UN ELEMENTO HIJO A LA LISTA DE POKEMONS
+	var div=document.createElement("div");
+
+	div.appendChild($fig);// SE AGREGA UN ELEMENTO HIJO A LA LISTA DE POKEMONS
+	$pokeList.appendChild(div);
 	$fig.onclick = function () {
 		detalleCompleto(this.id);
 	};
@@ -125,56 +128,82 @@ function mostrarHabilidades(array) {
 	let $habilidades = document.querySelector(".habilidades");
 	$habilidades.innerHTML = "";
 	let $div = document.createElement("div");
+	let $divaux= document.createElement("div");
+	$divaux.classList.add("habContainer");
 	$div.classList.add("elem-dato");
 	$div.innerHTML = "<p><strong>Habilidades</strong></p>";
 	array.forEach((e) => {
+		
 		let nombre = e.ability.name;
 		let $p = document.createElement("p");
 		$p.innerText = `*  ${nombre}`;
 		$p.classList.add("habilidad");
-		$div.appendChild($p);
+		$divaux.appendChild($p);
 	});
+	
+	$div.appendChild($divaux);
+	$div.style.borderRight="5px solid white"
+	$div.style.borderBottom="5px solid white"
 	$habilidades.appendChild($div);
 }
 function mostrarTipos(array) {
 	let $div = document.createElement("div");
 	$div.innerHTML = "<p><strong>tipo/base</strong></p>";
+	let $divaux= document.createElement("div");
+	$divaux.classList.add("habContainer");
 	$div.classList.add("elem-dato");
 	array.forEach((e) => {
 		let $p = document.createElement("p");
 		$p.innerText = `*  ${e.type.name}`;
 
-		$div.appendChild($p);
+		$divaux.appendChild($p);
 	});
-
+	$div.appendChild($divaux);
+	$div.style.borderLeft="5px solid white"
+	$div.style.borderBottom="5px solid white"
 	document.querySelector(".habilidades").appendChild($div);
 }
 function mostrarPesoAltura(json) {
 	let $div = document.createElement("div");
-	$div.innerHTML = `<p><strong>Peso: </strong>${json.weight}</p>
+	let $divaux= document.createElement("div");
+	$divaux.classList.add("habContainer");
+	$divaux.innerHTML = `<p><strong>Peso: </strong>${json.weight}</p>
 					<p><strong>Altura: </strong>${json.height}</p>`;
 	$div.classList.add("elem-dato");
+	
+	
+	$div.appendChild($divaux)
+	$div.style.borderTop="5px solid white"
+	$div.style.borderRight="5px solid white"
 	document.querySelector(".habilidades").appendChild($div);
 }
 
 function mostrarMoves(array) {
 	let $div = document.createElement("div");
 	$div.classList.add("elem-dato");
-	$div.innerHTML = "<p><strong>Ataques  :</strong></p>";
+	$div.innerHTML = "<p><strong>Ataques</strong></p>";
+	let $divaux= document.createElement("div");
+	$divaux.classList.add("habContainer");
 	if (array.length >= 5) {
 		for (let i = 0; i < 5; i++) {
 			let $p = document.createElement("p");
 			console.log(array[i]["move"]["name"]);
-			$p.innerHTML = `<p>*    ${array[i]["move"]["name"]}</p>`;
-			$div.appendChild($p);
+			$p.innerHTML = `*${array[i]["move"]["name"]}`;
+			$divaux.appendChild($p);
 		}
+		$div.appendChild($divaux)
+		$div.style.borderLeft="5px solid white"
+		$div.style.borderTop="5px solid white"
 	} else {
 		for (let i = 0; i < array.length; i++) {
 			let $p = document.createElement("p");
 			console.log(array[i]["move"]["name"]);
 			$p.innerHTML = `<p>${array[i]["move"]["name"]}</p>`;
-			$div.appendChild($p);
+			$divaux.appendChild($p);
 		}
+		$div.style.borderLeft="5px solid white"
+		$div.style.borderTop="5px solid white"
+		$div.appendChild($divaux)
 	}
 	document.querySelector(".habilidades").appendChild($div);
 }
