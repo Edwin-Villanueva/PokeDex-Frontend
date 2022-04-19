@@ -45,10 +45,10 @@ function cargarFlechas(data) {
 		previous.disabled = false;
 	}
 	if (data.next == null) {
-		next.disabled = true;
+		$next.disabled = true;
 		document.getElementById("previous").value = prevfin;
 	} else {
-		next.disabled = false;
+		$next.disabled = false;
 	}
 	// console.count("cargar-flechas");
 }

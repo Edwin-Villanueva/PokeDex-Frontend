@@ -110,12 +110,9 @@ h1 {
         font-size: 15px;
     
     }
+    
     .titulo{
         font-size: 20px;
-    }
-    #previous,#next:hover{
-        background-color: white;
-    
     }
     .lista-pokemones div figure figcaption{
         font-size: 10px;
@@ -208,6 +205,8 @@ h1 {
 }
 @media only screen and (max-width: 1215px) {
        .habilidades{
+           font-size: large;
+           height: auto;
            width: auto;
            flex-wrap: nowrap;
            flex-direction:column;
