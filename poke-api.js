@@ -88,7 +88,7 @@ function setearElement(data, nombre) {
 		$img.width = "96";
 		$img.height = "96";
 
-		$figCap.innerText = name;
+		$figCap.innerText =name;
 		let tamList =
 			document.querySelector(".lista-pokemones").children.length;
 		if ((parent !== null && tamList == 20) || tamList == 18) {
@@ -142,8 +142,6 @@ function mostrarHabilidades(array) {
 	});
 	
 	$div.appendChild($divaux);
-	$div.style.borderRight="5px solid white"
-	$div.style.borderBottom="5px solid white"
 	$habilidades.appendChild($div);
 }
 function mostrarTipos(array) {
@@ -159,8 +157,6 @@ function mostrarTipos(array) {
 		$divaux.appendChild($p);
 	});
 	$div.appendChild($divaux);
-	$div.style.borderLeft="5px solid white"
-	$div.style.borderBottom="5px solid white"
 	document.querySelector(".habilidades").appendChild($div);
 }
 function mostrarPesoAltura(json) {
@@ -173,8 +169,6 @@ function mostrarPesoAltura(json) {
 	
 	
 	$div.appendChild($divaux)
-	$div.style.borderTop="5px solid white"
-	$div.style.borderRight="5px solid white"
 	document.querySelector(".habilidades").appendChild($div);
 }
 
@@ -192,8 +186,6 @@ function mostrarMoves(array) {
 			$divaux.appendChild($p);
 		}
 		$div.appendChild($divaux)
-		$div.style.borderLeft="5px solid white"
-		$div.style.borderTop="5px solid white"
 	} else {
 		for (let i = 0; i < array.length; i++) {
 			let $p = document.createElement("p");
@@ -201,8 +193,6 @@ function mostrarMoves(array) {
 			$p.innerHTML = `<p>${array[i]["move"]["name"]}</p>`;
 			$divaux.appendChild($p);
 		}
-		$div.style.borderLeft="5px solid white"
-		$div.style.borderTop="5px solid white"
 		$div.appendChild($divaux)
 	}
 	document.querySelector(".habilidades").appendChild($div);
