@@ -1,32 +1,29 @@
 const pokeAPI = "https://pokeapi.co/api/v2/pokemon?"; //api
 const limite = "offset=0&limit=20";
-const prevfin = "https://pokeapi.co/api/v2/pokemon?offset=1080&limit=20";
+const prevfin = "https://pokeapi.co/api/v2/pokemon?offset=1100&limit=20";
 document.addEventListener("DOMContentLoaded", () => {
 	//document.querySelector(".lista-pokemones").innerHTML = "";
 	crearListaDePokemons(`${pokeAPI}${limite}`);
 });
 
-function obtenerJson(url, unaFuncion, otroParametro) {
-	fetch(url)
+async function obtenerJson(url, unaFuncion, otroParametro) { //devuelvo una promesa desde donde fue invocada(otra funcion) para controlar con await
+	
+	return fetch(url)										//desde afuera que luego no hago nada con eso solo es para ejecutarlo
 		.then((res) => res.json())
 		.then((data) => {
-			unaFuncion(data, otroParametro);
-		});
+			 return new Promise(function(resolve, reject) {unaFuncion(data, otroParametro)})
+		} );
 }
 //------------------------------CREO LA LISTA DE POKEMONS-------------------------
-function crearListaDePokemons(url) {
-	document.querySelector(".lista-pokemones").innerHTML = "";
-	obtenerJson(url, loadPokemons);
+async function crearListaDePokemons(url) {
+	await obtenerJson(url, loadPokemons);//aca ejecuto la funcion con el await pero no se lo asigno a nada porq solo quiero q se ejecute 
 }
 
-function loadPokemons(data) {
+ function loadPokemons(data) {
 	//DATA ES EL JSON YA GENERADO
 	document.querySelector(".lista-pokemones").innerHTML = "";
 
 	cargarFlechas(data);
-	console.log(document.getElementById("previous").value);
-	console.log(document.getElementById("next").value);
-
 	for (let i = 0; i < data.results.length; i++) {//proceso cada elemendo de data que contiene nombre y link de cada pokemon
 		agregarElemento(data.results[i].name, data.results[i].url);
 		obtenerJson(data.results[i].url, setearElement, data.results[i].name);
@@ -40,11 +37,12 @@ function cargarFlechas(data) {
 	let $next = document.getElementById("next");
 	$next.value = data.next;
 	if (data.previous == null) {
-		previous.disabled = true;
+		$previous.disabled = true;
 	} else {
-		previous.disabled = false;
+		$previous.disabled = false;
 	}
-	if (data.next == null) {
+
+	if (data.next == null) {	
 		$next.disabled = true;
 		document.getElementById("previous").value = prevfin;
 	} else {
@@ -73,11 +71,11 @@ function agregarElemento(name, url) {
 //SETEO EL NOMBRE Y LA IMAGEN DE UN ELEMENTO
 function setearElement(data, nombre) {
 	//PASO DATA QUE SERIA EL JSON DEL POKEMON Y NOMBRE DEL POKEMON
+	
 	if (data) {
-		let url = data.sprites.front_default;
+		var url = data.sprites.front_default || data.sprites.other["official-artwork"].front_default ;
 		if (url === null) {
-			//agregue recien
-			url = data.sprites.other["official-artwork"].front_default;
+			url= data.sprites.other["official-artwork"].front_default || data.sprites.other["home"].front_default || data.sprites.front_shiny || data.sprites.versions["generation-viii"].icons.front_default;
 		}
 		let name = nombre;
 
@@ -91,14 +89,8 @@ function setearElement(data, nombre) {
 		$figCap.innerText =name;
 		let tamList =
 			document.querySelector(".lista-pokemones").children.length;
-		if ((parent !== null && tamList == 20) || tamList == 18) {
-			/*console.log(
-				"parent es = " +
-					parent +
-					" con cantidad de hijos  = a " +
-					tamList
-			);*/
-			parent.appendChild($figCap);
+		if ((parent !== null && tamList == 20) || tamList == 18 || tamList == 6) {//ACA CONTROLO LA CANTIDAD DE POKEMONS QUE ME TRAE LA API ANTES DE 
+			parent.appendChild($figCap);//INCLUIRLA EN EL EL LA PAGINA
 			parent.appendChild($img);
 		}
 	}
@@ -109,22 +101,21 @@ function setearElement(data, nombre) {
 function setearNombre(id) {
 	document.getElementById("nombre").innerHTML = id.toUpperCase();
 }
-function detalleCompleto(id) {
+async function detalleCompleto(id) {
 	setearNombre(id);
 	let url = document.getElementById(id).src;
-	obtenerJson(url, mostrarDatos);
+	await obtenerJson(url, mostrarDatos);
 }
 function mostrarImagenPokemon(url) {
 	let imagen = document.getElementById("img");
 	let img = url.sprites.other["official-artwork"].front_default; // ESTAN SON LA IMAGENES CENTRALES
 	if (img === null) {
-		img = url.sprites.front_default;
+		img = url.sprites.front_default || url.sprites.front_shiny || url.sprites.versions["generation-viii"].icons.front_default;
 	}
 	imagen.src = img;
 }
 
 function mostrarHabilidades(array) {
-	//console.log(array);
 	let $habilidades = document.querySelector(".habilidades");
 	$habilidades.innerHTML = "";
 	let $div = document.createElement("div");
@@ -181,7 +172,6 @@ function mostrarMoves(array) {
 	if (array.length >= 5) {
 		for (let i = 0; i < 5; i++) {
 			let $p = document.createElement("p");
-			console.log(array[i]["move"]["name"]);
 			$p.innerHTML = `*${array[i]["move"]["name"]}`;
 			$divaux.appendChild($p);
 		}
@@ -189,7 +179,6 @@ function mostrarMoves(array) {
 	} else {
 		for (let i = 0; i < array.length; i++) {
 			let $p = document.createElement("p");
-			console.log(array[i]["move"]["name"]);
 			$p.innerHTML = `<p>${array[i]["move"]["name"]}</p>`;
 			$divaux.appendChild($p);
 		}
@@ -208,7 +197,7 @@ function mostrarDatos(url) {
 
 //***************************************************************************************/
 
-function manejarFlechas(id) {
+async function manejarFlechas(id) {
 	let $previous = document.getElementById("previous");
 	let $next = document.getElementById("next");
 
@@ -217,28 +206,48 @@ function manejarFlechas(id) {
 			if ($previous.value === prevfin) {
 				//controlo cuando vuelvo desde la ultima pagina , volver a habilitar la siguiente
 				$next.disabled = false;
+				console.log("1")
 			}
 			$previous.classList.remove("disabled");
+			$previous.disabled = true;
+			await (new Promise(function(resolve, reject) {
+				resolve(crearListaDePokemons($previous.value))
+
+			}));
+			console.log("1.1")
+			$previous.classList.remove("disabled");
 			$previous.disabled = false;
-			document.querySelector(".lista-pokemones").innerHTML = "";
-			crearListaDePokemons($previous.value); //data.previous);
+			crearListaDePokemons($previous.value); //data.previous);	
 		} else {
+			console.log("2")
 			$previous.classList.add("disabled");
 			$previous.disabled = true;
 		}
-	} else {
-		if ($next.value != "null") {
+	} 
+	else {// el next elvalor
+		if ($next.value !== null && $next.value.slice(-1) !== "6") {
+			$next.classList.remove("disabled");
+			$next.disabled = true;
+			await (new Promise(function(resolve, reject) {
+				resolve(crearListaDePokemons($next.value))
+
+			}));
 			$next.classList.remove("disabled");
 			$next.disabled = false;
 			$previous.classList.remove("disabled");
 			$previous.disabled = false;
-			document.querySelector(".lista-pokemones").innerHTML = "";
-			crearListaDePokemons($next.value);
-		} else {
+			// crearListaDePokemons($next.value);
+		}
+		else {
+			await (new Promise(function(resolve, reject) {
+				resolve(crearListaDePokemons($next.value))
+		
+			}));
+			console.log("4.1")
 			$next.classList.add(".disabled");
 			$next.disabled = true;
-			document.getElementById("previous").value = prevfin; //controlo el fin para que cuando retroceda no me traiga
-			//18 pokemons
+			// document.getElementById("previous").value = prevfin; //controlo el fin para que cuando
+			// // retroceda no me traiga los 18 pokemons
 		}
-	}
+   }
 }
