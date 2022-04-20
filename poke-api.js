@@ -210,10 +210,26 @@ async function manejarFlechas(id) {
 			}
 			$previous.classList.remove("disabled");
 			$previous.disabled = true;
+
+			// Desactivo la flecha siguiente para que no me genere error si la llegoo a apresionar
+			$next.classList.remove("disabled");
+			$next.disabled = true;
+
+			//
 			await (new Promise(function(resolve, reject) {
 				resolve(crearListaDePokemons($previous.value))
 
 			}));
+
+			// vuelvo a activar la flecha siguiente r
+				$next.classList.remove("disabled");
+				$next.disabled = false;
+
+			//
+			
+			
+
+
 			console.log("1.1")
 			$previous.classList.remove("disabled");
 			$previous.disabled = false;
@@ -228,10 +244,23 @@ async function manejarFlechas(id) {
 		if ($next.value !== null && $next.value.slice(-1) !== "6") {
 			$next.classList.remove("disabled");
 			$next.disabled = true;
+
+			// Desactivo la flecha anterior para que no me genere error si la llegoo a apresionar
+				
+			$previous.classList.remove("disabled");
+			$previous.disabled = true;
+			
+			//
+
 			await (new Promise(function(resolve, reject) {
 				resolve(crearListaDePokemons($next.value))
 
 			}));
+
+			// vuelvo a activar la flecha previa
+			$previous.classList.remove("disabled");
+			$previous.disabled = false;
+			//
 			$next.classList.remove("disabled");
 			$next.disabled = false;
 			$previous.classList.remove("disabled");
@@ -239,10 +268,15 @@ async function manejarFlechas(id) {
 			// crearListaDePokemons($next.value);
 		}
 		else {
+			// Desactivo la flecha anterior para que no me genere error si la llegoo a apresionar
+
+			
+			//
 			await (new Promise(function(resolve, reject) {
 				resolve(crearListaDePokemons($next.value))
 		
 			}));
+			
 			console.log("4.1")
 			$next.classList.add(".disabled");
 			$next.disabled = true;

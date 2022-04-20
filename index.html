@@ -9,22 +9,32 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<title>Poke API </title>
 	</head>
-	<body style="background-color:darkred;">
-		<div style="background-color: darkred;" class="container contenedorGeneral">
+	<body style="background-color:#de1f21;">
+		<div style="background-color: #de1f21;" class="container-fluid contenedorGeneral">
+			
+				<!-- <div class="row container-fluid center align-items-center">
+				  <div class="col">
+					One
+				  </div>
+				  <div class="col">
+					Two
+				  </div>
+				  <div class="col">
+					Tree
+				  </div>
+				</div> -->
 			<div class="cabezera col" value="">
 				<button
-					class="btn"
+					class="btn btn-outline-primary"
 					id="previous"
 					onclick="manejarFlechas(this.id)"
-				>
-					Pagina Anterior
-				</button>
+				>Pagina Anterior </button>
 
-				<div >
+				
 					<h1 class="titulo">Pokédex</h1>
-				</div>
+				
 
-				<button class="btn" id="next" onclick="manejarFlechas(this.id)">
+				<button class="btn btn-outline-primary" id="next" onclick="manejarFlechas(this.id)">
 					Pagina Siguiente
 				</button>
 			</div>
